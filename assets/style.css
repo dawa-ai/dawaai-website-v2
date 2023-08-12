@@ -59,8 +59,7 @@ form{
    box-shadow: 0px 0px 8px 0px #33333329;
 }
 form span{
-    width: 233px;
-  
+    width: 233px;   
     font-family: 'Raleway';
     font-weight: 700;
     size: 20px;
@@ -80,6 +79,7 @@ form input{
    
     gap: 10px;
     width: 290px;
+    border-radius: 50px;
     border-color:purple;
     padding: 8px 16px 8px 16px;
     border-radius: 1px solid #E6E6E6

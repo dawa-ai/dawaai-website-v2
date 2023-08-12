@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>India Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>India Map</h1>
+        <div class="form-group">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search for a location">
+        </div>
+        <button id="searchButton" class="btn btn-primary">Search</button>
+        <div id="map"></div>
+        <div id="details" class="mt-3">
+            <!-- Details will be displayed here -->
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        const data =[
+    {
+        "state_id":1,
+        "state_name": "Andaman and Nicobar Islands",
+        "district_id":1,
+        "district_name": "South Andaman",
+        "hospital_id": 1,
+        "Location_Coordinates": { "lat": 11.6357989, "lng": 92.7120575 },
+        "hospital_name": "Chakraborty Multi Speciality Hospital",
+        "hospital_location": "Near Dollygunj Junction",
+        "Pincode": 744101
+    },
+    {
+        "state_id":1,
+        "state_name": "Andaman and Nicobar Islands",
+        "district_id":1,
+        "district_name": "South Andaman",
+        "hospital_id": 5,
+        "Location_Coordinates": { "lat": 11.6233774, "lng": 92.7264828 },
+        "hospital_name": "G B Pant Hospital, Port Blair",
+        "hospital_location": "GB Pant Road, City Centre, Port Blair",
+        "Pincode": 744103
+    },
+    {
+        "state_id":1,
+        "state_name": "Andaman and Nicobar Islands",
+        "district_id":1,
+        "district_name": "South Andaman",
+        "hospital_id": 2,
+        "Location_Coordinates": { "lat": 11.8311681,"lng":92.6586401 },
+        "hospital_name": "Inhs Dhanvantri ",
+        "hospital_location": "Medical Board Office",
+        "Pincode": 744101
+    },
+    {
+        "state_id":1,
+        "state_name": "Andaman and Nicobar Islands",
+        "district_id":1,
+        "district_name": "South Andaman",
+        "hospital_id": 3,
+        "Location_Coordinates": { "lat": 11.8311681,"lng":92.6586401 },
+        "hospital_name": "Maricar Hospital",
+        "hospital_location": "Near Masjid",
+        "Pincode": 744103
+    },
+    {
+        "state_id":1,
+        "state_name": "Andaman and Nicobar Islands",
+        "district_id":1,
+        "district_name": "South Andaman",
+        "hospital_id": 4,
+        "Location_Coordinates": { "lat": 11.6498468,"lng": 92.7294624 },
+        "hospital_name": "Pillar Health Centre ",
+        "hospital_location": "Lamba Line, P.B. No. 526",
+        "Pincode": 744103
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 7,
+        "Location_Coordinates": { "lat": 14.6795736,"lng":  77.592469 },
+        "hospital_name": "Aasha Hospitals",
+        "hospital_location": "7/201, Court Road Anantapur 515001  Anantapur",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 8,
+        "Location_Coordinates": null,
+        "hospital_name": "Abhaya Kidney Care Multispeciality Hospital",
+        "hospital_location": "10-470, Adimurthy Nagar, Opposite Guild Off Service School",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 37,
+        "Location_Coordinates": {  "lat":14.6735546, "lng": 77.6081894},
+        "hospital_name": "Anantapuram Praja Vaidyasala",
+        "hospital_location": "28-639-1, Behind Sangamesh Funtion Hall, Anantapur",
+        "Pincode": 515005
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 47,
+        "Location_Coordinates":null,
+        "hospital_name": "Azad Diabetic Centre",
+        "hospital_location": "Near Andhra Bank, Byepass Road, Kadiri",
+        "Pincode": 515591
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 9,
+        "Location_Coordinates": {  "lat":14.6818877,"lng":  77.6005911 },
+        "hospital_name": "Baby Hospital",
+        "hospital_location": "Hyma Test Tube Baby and Research Centre, Baby Hospital Complex, Sainagar,Anantapur",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 38,
+        "Location_Coordinates": {  "lat":14.6818877,"lng":  77.6005911 },
+        "hospital_name": "Balaji Nursing Home",
+        "hospital_location": "M.F. Road",
+        "Pincode": 515201
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 48,
+        "Location_Coordinates": {  "lat":14.4137447, "lng":77.7126189 },
+        "hospital_name": "Devi Nursing Home",
+        "hospital_location": "Beside Sudharsan Theatre, R.S.Road, Dharmavaram, Anantapur",
+        "Pincode": 515671
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 35,
+        "Location_Coordinates":null,
+        "hospital_name": "Divyasree Hospital",
+        "hospital_location": "Adimurthy Nagar Guild Of Service Road",
+        "Pincode": 515002
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 10,
+        "Location_Coordinates": {  "lat":14.6723351,"lng": 77.6018211 },
+        "hospital_name": "Dr Akbar Eye Hospital And Laser Centre",
+        "hospital_location": "12-3-234, 6Th Cross Sai Nagar Anantapur 515001  Anantapur",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 39,
+        "Location_Coordinates": {  "lat":14.6818877,"lng":  77.6005911},
+        "hospital_name": "Dr B V Syamala Ratnam Hospiatal",
+        "hospital_location": "Opposite R.T.C Bus Stand, Hindupur (Po) Anantapur",
+        "Pincode": 515201
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 11,
+        "Location_Coordinates": null,
+        "hospital_name": "Dr.Ysr Memorial Hospitals",
+        "hospital_location": "12-2-878, I Cross, Sai Nagar,Near By Sbi Main Branch",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 40,
+        "Location_Coordinates":{  "lat":14.178135, "lng": 77.2728241},
+        "hospital_name": "Girish Multispeciality Hospital",
+        "hospital_location": "18-1-167, M F Road, Hindupur",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 12,
+        "Location_Coordinates":{  "lat":14.6749908, "lng": 77.6032432},
+        "hospital_name": "Hrudaya Children Hospital",
+        "hospital_location": "Sai Nagar Iind Cross,Anantapur ",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 13,
+        "Location_Coordinates":{  "lat":17.4738037,"lng": 78.5641765},
+        "hospital_name": "Jeevana Jyothi Hospitals Ltd.",
+        "hospital_location": "15-381, Kamala Nagar",
+        "Pincode": 515001
+    },
+    {
+        "state_id":2,
+        "state_name": "Andhra Pradesh",
+        "district_id":2,
+        "district_name": "Anantapur",
+        "hospital_id": 14,
+        "Location_Coordinates":null,
+        "hospital_name": "K K Nursing Home",
+        "hospital_location": "Opposite Annapurna Lodge Kamalanagar",
+        "Pincode": 515001
+    },
+ ]
+
+        let map;
+        let markers = [];
+
+        function initMap() {
+            const indiaCenter = [20.5937, 78.9629];
+            map = L.map('map').setView(indiaCenter, 5);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            data.forEach(hospital => {
+                if (hospital.Location_Coordinates) {
+                    const marker = L.marker(hospital.Location_Coordinates)
+                        .addTo(map)
+                        .bindPopup(`<b>${hospital.hospital_name}</b><br>${hospital.hospital_location}<br>Pincode: ${hospital.Pincode}`)
+                        .on('click', () => {
+                            showDetails(hospital);
+                        });
+
+                    markers.push(marker);
+                }
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            searchButton.addEventListener('click', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                markers.forEach(marker => {
+                    const hospitalName = marker.getPopup().getContent().toLowerCase();
+                    if (hospitalName.includes(searchTerm)) {
+                        marker.setOpacity(1);
+                    } else {
+                        marker.setOpacity(0);
+                    }
+                });
+            });
+        }
+
+        function showDetails(hospital) {
+            const detailsDiv = document.getElementById('details');
+            detailsDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${hospital.hospital_name}</h5>
+                        <p class="card-text">${hospital.hospital_location}</p>
+                        <p class="card-text">Pincode: ${hospital.Pincode}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.onload = initMap;
+    </script>
+</body>
+</html>
